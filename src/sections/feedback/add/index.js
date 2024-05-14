@@ -1,0 +1,1 @@
+export { default as FeedbackAddForm } from './feedback-add-form';

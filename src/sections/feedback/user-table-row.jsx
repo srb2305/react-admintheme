@@ -17,6 +17,7 @@ import Iconify from 'src/components/iconify';
 // ----------------------------------------------------------------------
 
 export default function UserTableRow({
+  index,
   id,
   title,
   description,
@@ -36,13 +37,13 @@ export default function UserTableRow({
   return (
     <>
       <TableRow hover tabIndex={-1}>
-        <TableCell>{id}</TableCell>
+        <TableCell>{index}</TableCell>
         <TableCell>{title}</TableCell>
 
         <TableCell>{description}</TableCell>
 
         <TableCell>
-          <Label>{type}</Label>
+          <Label>{type == 1 ? 'Feedback' : 'Suggestion'}</Label>
         </TableCell>
 
         <TableCell align="right">

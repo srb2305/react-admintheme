@@ -44,7 +44,8 @@ export default function FeedbackPage() {
   }, []);
 
   const fetchData = async () => {
-    axios.get('https://cors-anywhere.herokuapp.com/https://srbtracking.com/api/feedback_get')
+    //axios.get('https://cors-anywhere.herokuapp.com/https://srbtracking.com/api/feedback_get')
+    axios.get('http://127.0.0.1:8000/api/feedback_get')    
       .then(response => {
         // Handle response data
         console.log(response.data);
@@ -118,7 +119,7 @@ export default function FeedbackPage() {
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Feedback</Typography>
 
-        <Button variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
+        <Button variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />} href="/feedback-add" >
           New Feedback
         </Button>
       </Stack>
@@ -151,9 +152,11 @@ export default function FeedbackPage() {
               <TableBody>
                 {dataFiltered
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => (
+                  .map((row,index) => (
                     <UserTableRow
-                      key={row.id}
+                      key={index}
+                      index={++index}
+                      id={row.id}
                       title={row.title}
                       description={row.description}
                       type={row.type}
