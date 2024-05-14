@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link }  from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Stack from '@mui/material/Stack';
@@ -63,10 +64,12 @@ export default function UserTableRow({
           sx: { width: 140 },
         }}
       >
-        <MenuItem onClick={handleCloseMenu}>
-          <Iconify icon="eva:edit-fill" sx={{ mr: 2 }} />
-          Edit
-        </MenuItem>
+        <Link to={`/feedback-edit/${id}`}>
+          <MenuItem>
+            <Iconify icon="eva:edit-fill" sx={{ mr: 2 }} />
+            Edit
+          </MenuItem>
+        </Link>
 
         <MenuItem onClick={handleCloseMenu} sx={{ color: 'error.main' }}>
           <Iconify icon="eva:trash-2-outline" sx={{ mr: 2 }} />

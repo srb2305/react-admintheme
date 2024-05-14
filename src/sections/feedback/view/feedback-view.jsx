@@ -103,6 +103,8 @@ export default function FeedbackPage() {
 
   const handleFilterByName = (event) => {
     setPage(0);
+    console.log('handleFilterByName');
+    console.log(event.target.value);
     setFilterName(event.target.value);
   };
 

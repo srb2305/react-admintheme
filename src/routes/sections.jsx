@@ -11,6 +11,7 @@ export const ProductsPage = lazy(() => import('src/pages/products'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 export const Feedback = lazy(() => import('src/pages/feedback'));
 export const FeedbackAdd = lazy(() => import('src/pages/feedback-add'));
+export const FeedbackEdit = lazy(() => import('src/pages/feedback-edit'));
 
 // ----------------------------------------------------------------------
 
@@ -28,6 +29,7 @@ export default function Router() {
         { element: <IndexPage />, index: true },
         { path: 'feedback', element: <Feedback /> },
         { path: 'feedback-add', element: <FeedbackAdd /> },
+        { path: 'feedback-edit/:id', element: <FeedbackEdit /> },
         { path: 'user', element: <UserPage /> },
         { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },
