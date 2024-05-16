@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axios from 'axios';
 import { Link }  from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -24,6 +25,7 @@ export default function UserTableRow({
   description,
   type,
   handleClick,
+  parentFucntionFetchData
 }) {
   const [open, setOpen] = useState(null);
 
@@ -35,6 +37,32 @@ export default function UserTableRow({
     setOpen(null);
   };
 
+  const handleDelete = (id) => {
+      axios.get(`http://127.0.0.1:8000/api/feedback_delete/${id}`)    
+      .then(response => {
+        // Handle response data
+        console.log(response.data);
+        handleCloseMenu();
+        parentFucntionFetchData();
+      })
+      .catch(error => {
+        // Handle error
+        console.error('Error fetching data:', error);
+      });
+  };
+
+  const handleStatusChange = (id) => {
+    axios.get(`http://127.0.0.1:8000/api/feedback_status/${id}`)    
+      .then(response => {
+        // Handle response data
+        console.log(response.data);
+        parentFucntionFetchData();
+      })
+      .catch(error => {
+        // Handle error
+        console.error('Error fetching data:', error);
+      });
+  }
   return (
     <>
       <TableRow hover tabIndex={-1}>
@@ -44,7 +72,15 @@ export default function UserTableRow({
         <TableCell>{description}</TableCell>
 
         <TableCell>
-          <Label>{type == 1 ? 'Feedback' : 'Suggestion'}</Label>
+        
+          <Label onClick={ () => handleStatusChange(id)}
+            style={{
+              color:'white',
+              background: type == 1 ? 'green' : 'red'
+            }}>
+            {type == 1 ? 'Active' : 'Inactive'}
+          </Label>
+        
         </TableCell>
 
         <TableCell align="right">
@@ -71,7 +107,7 @@ export default function UserTableRow({
           </MenuItem>
         </Link>
 
-        <MenuItem onClick={handleCloseMenu} sx={{ color: 'error.main' }}>
+        <MenuItem onClick={ () => handleDelete(id)} sx={{ color: 'error.main' }}>
           <Iconify icon="eva:trash-2-outline" sx={{ mr: 2 }} />
           Delete
         </MenuItem>

@@ -147,7 +147,7 @@ export default function FeedbackPage() {
                   { id: 'id', label: 'Id' },
                   { id: 'title', label: 'Title' },
                   { id: 'description', label: 'Description' },
-                  { id: 'type', label: 'Type' },
+                  { id: 'status', label: 'Status' },
                   { id: '' },
                 ]}
               />
@@ -164,6 +164,7 @@ export default function FeedbackPage() {
                       type={row.type}
                       selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event) => handleClick(event, row.id)}
+                      parentFucntionFetchData={fetchData}
                     />
                   ))}
 
