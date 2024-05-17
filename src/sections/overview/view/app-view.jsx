@@ -1,5 +1,6 @@
+import {useEffect} from 'react';
 import { faker } from '@faker-js/faker';
-
+import { useRouter } from 'src/routes/hooks';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
@@ -19,6 +20,14 @@ import AppConversionRates from '../app-conversion-rates';
 // ----------------------------------------------------------------------
 
 export default function AppView() {
+  const router = useRouter();
+  
+  useEffect(() => {
+    const login = localStorage.getItem('is_user_login');
+    if(login == 'false'){
+      router.push('/login');
+    }
+  });
   return (
     <Container maxWidth="xl">
       <Typography variant="h4" sx={{ mb: 5 }}>

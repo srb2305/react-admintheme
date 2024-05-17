@@ -1,5 +1,4 @@
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
@@ -27,21 +26,63 @@ export default function LoginView() {
 
   const router = useRouter();
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    const login = localStorage.getItem('is_user_login');
+    if(login == 'true'){
+      router.push('/');
+    }
+  });
 
   const handleClick = () => {
     router.push('/dashboard');
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try{
+      const responce = await fetch('http://127.0.0.1:8000/api/login',{
+        method: 'POST',
+        headers: {
+          'Content-Type':'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password
+        })
+      });
+
+      const data = await responce.json();
+      if (!data.status) {
+        alert('Something went wrong');
+        localStorage.setItem('is_user_login', false);
+        throw new Error('Responce was not ok');
+      } else {
+        localStorage.setItem('is_user_login', true);
+        router.push('/');
+      }
+    } catch (error) {
+      console.log('Error adding data:', error);
+    } 
+  }
   const renderForm = (
     <>
+    <form onSubmit={handleSubmit}>
       <Stack spacing={3}>
-        <TextField name="email" label="Email address" />
+        <TextField 
+          name="email"
+          label="Email address"  
+          onChange={ (e) => setEmail(e.target.value) } 
+        />
 
         <TextField
           name="password"
           label="Password"
           type={showPassword ? 'text' : 'password'}
+          onChange={ (e) => setPassword(e.target.value) }
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -59,17 +100,17 @@ export default function LoginView() {
           Forgot password?
         </Link>
       </Stack>
-
+      <button type="submit"> Login</button>
       <LoadingButton
         fullWidth
         size="large"
         type="submit"
         variant="contained"
         color="inherit"
-        onClick={handleClick}
       >
         Login
       </LoadingButton>
+      </form>
     </>
   );
 
